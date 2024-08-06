@@ -157,9 +157,10 @@ def calSigLvl(bg_df, gene, alpha_val):
         summary = az.summary(negB)
         z_val = stats.norm.ppf(1-alpha_val)    
         sig_lvl = summary.loc['Intercept', 'mean'] + ((z_val*summary.loc['Intercept', 'sd'])/math.sqrt(len(bg_df)))
-    except:
+    except Exception as e:
         print("Negative binomial fitting failed. Taking average to calculate significance value.")
-        sig_lvl = bg_df.loc[:, gene].mean()
+        print(e)
+        sig_lvl = bg_df.loc[:, "count"].mean()
     return sig_lvl
 
 
